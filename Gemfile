@@ -72,7 +72,7 @@ group :test do
   gem "selenium-webdriver"
   gem "webdrivers"
 end
-
+# 下に本番環境（Render）のデータベース（PostgreSQL）を使用できるようGemを追加
 group :production do
   gem 'pg'
 end
