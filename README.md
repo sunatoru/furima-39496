@@ -31,12 +31,32 @@
 - belongs_to :user
 - has_one :buy
 
-## buiesテーブル
+## Ordersテーブル
 | Column          | type        | Option                         |
 | --------------- | ----------- | -------------------------------|
 |credit-card-info | string      | null: false,                   |
 |derivery-country | string      | null: false,                   |
 |telephone-number | string      | null: false,                   |
+|user_id          | references  | null: false, foreign_key: true |
+|derivery-country | string      | null: false,                   |
+|telephone-number | string      | null: false,                   |
 
 ### Association
 - belongs_to :item
+- has_one :addresses
+
+
+## Addressesテーブル
+
+| Column          | type        | Option                         |
+| --------------- | ----------- | -------------------------------|
+| postal-code     | string      | null: false                    |
+| user_id         | references  | null: false, foreign_key: true |
+| country         | string      | null: false                    |
+| city            | string      | null: false                    |
+| adress          | string      | null: false                    |
+| telepone-number | string      | null: false                    |
+
+### Association
+- belongs_to :user
+- belongs_to :order
