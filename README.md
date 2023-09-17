@@ -6,60 +6,60 @@
 | ------------------------ | ------- | -------------------------- |
 | nickname                 | string  | null: false                |
 | email                    | string  | null: false, unique: true  |
-| name(first-name) (・漢字) | string  | null: false                |
-| name(last-name) (・漢字)  | string  | null: false                |
-| name(name_kana)  (first) | string  | null: false, :name_kana    |
-| name(name_kana)  (last)  | string  | null: false, :name_kana    |
-| birth-date               | date    | null: false                |
+| first_name               | string  | null: false                |漢字
+| last_name                | string  | null: false                |漢字
+| first_kana               | string  | null: false                |カナ
+| last_kana                | string  | null: false                |カナ
+| birth_date               | date    | null: false                |
 | encrypted_password       | string  | null: false                |
 
 ### Association
 - has_many :items
 - has_many :orders
-- has_one :addresses
+
 
 ## itemsテーブル
 
 | Column          | type        | Option                         |
 | --------------- | ----------- | -------------------------------|
-| item-name       | string      | null: false                    |
+| item_name       | string      | null: false,                   |
 | user            | references  | null: false, foreign_key: true |
 | item-content    | text        | null: false                    |
-| item-details    | string      | null: false                    |
-| item-derivery   | string      | null: false                    |
-| item-price      | string      | null: false                    |
+| category        | string      | null: false, category_id       |
+| condition       | string      | null: false, condition_id,     |
+| delivery_country| string      | null: false,delivery_country_id|
+| delivery_date   | string      | null: false,delivery_date_id   |
+| delivery_charge | string      | null: false,delivery_charge_id |
+| item_price      | integer     | null: false                    |
 
 ### Association
 - belongs_to :user
 - has_one :buy
 
 ## Ordersテーブル
-| Column          | type        | Option                         |
-| --------------- | ----------- | -------------------------------|
-|credit-card-info | string      | null: false,                   |
-|derivery-country | string      | null: false,                   |
-|telephone-number | string      | null: false,                   |
-|user             | references  | null: false, foreign_key: true |
-|derivery-country | string      | null: false,                   |
-|telephone-number | string      | null: false,                   |
-
+| Column           | type        | Option                         |
+| ---------------- | ----------- | -------------------------------|
+| credit_info      | string      | null: false                    |
+| user             | references  | null: false, foreign_key: true |
+| item             | references  | null: false, foreign_key: true |
 ### Association
 - belongs_to :item
 - belongs_to :user
 - has_one :addresses
 
 
+
 ## Addressesテーブル
 
 | Column          | type        | Option                         |
 | --------------- | ----------- | -------------------------------|
-| postal-code     | string      | null: false                    |
-| country         | string      | null: false                    |
+| postal_code     | string      | null: false                    |
+| delivery_country| string      | null: false,delivery_country_id|
 | city            | string      | null: false                    |
-| adress          | string      | null: false                    |
-| building        | string      | null: false                    |
-| telepone-number | string      | null: false                    |
-| addresses       | references  | null: false, foreign_key: true |
+| address         | string      | null: false                    |
+| building        | string      |                                |
+| telephone_number| string      | null: false                    |
+| order           | references  | null: false, foreign_key: true |
 
 
 ### Association
