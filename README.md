@@ -34,32 +34,31 @@
 
 ### Association
 - belongs_to :user
-- has_one :buy
+- has_one :order
 
 ## Ordersテーブル
 | Column           | type        | Option                         |
 | ---------------- | ----------- | -------------------------------|
-| credit_info      | string      | null: false                    |
 | user             | references  | null: false, foreign_key: true |
 | item             | references  | null: false, foreign_key: true |
 ### Association
 - belongs_to :item
 - belongs_to :user
-- has_one :addresses
+- has_one :address
 
 
 
 ## Addressesテーブル
 
-| Column          | type        | Option                         |
-| --------------- | ----------- | -------------------------------|
-| postal_code     | string      | null: false                    |
-| delivery_country| string      | null: false,delivery_country_id|
-| city            | string      | null: false                    |
-| address         | string      | null: false                    |
-| building        | string      |                                |
-| telephone_number| string      | null: false                    |
-| order           | references  | null: false, foreign_key: true |
+| Column              | type        | Option                         |
+| ------------------- | ----------- | -------------------------------|
+| postal_code         | string      | null: false                    |
+| delivery_country_id | integer     | null: false                    |
+| city                | string      | null: false                    |
+| address             | string      | null: false                    |
+| building            | string      |                                |
+| telephone_number    | string      | null: false                    |
+| order               | references  | null: false, foreign_key: true |
 
 
 ### Association
