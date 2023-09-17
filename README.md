@@ -2,26 +2,28 @@
 
 ## Usersテーブル
 
-| Column             | Type    | Options                    |
-| ------------------ | ------- | -------------------------- |
-| nickname           | string  | null: false                |
-| email              | string  | null: false, unique: true  |
-| name (・漢字)       | string  | null: false                |
-| name(kana)         | string  | null: false, :name_kana    |
-| birth-date         | string  | null: false                |
-| password           | string  | null: false                |
-| encrypted_password | string  | null: false                |
+| Column                   | Type    | Options                    |
+| ------------------------ | ------- | -------------------------- |
+| nickname                 | string  | null: false                |
+| email                    | string  | null: false, unique: true  |
+| name(first-name) (・漢字) | string  | null: false                |
+| name(last-name) (・漢字)  | string  | null: false                |
+| name(name_kana)  (first) | string  | null: false, :name_kana    |
+| name(name_kana)  (last)  | string  | null: false, :name_kana    |
+| birth-date               | date    | null: false                |
+| encrypted_password       | string  | null: false                |
 
 ### Association
 - has_many :items
-
+- has_many :orders
+- has_one :addresses
 
 ## itemsテーブル
 
 | Column          | type        | Option                         |
 | --------------- | ----------- | -------------------------------|
-| item-name       | text        | null: false                    |
-| user_id         | references  | null: false, foreign_key: true |
+| item-name       | string      | null: false                    |
+| user            | references  | null: false, foreign_key: true |
 | item-content    | text        | null: false                    |
 | item-details    | string      | null: false                    |
 | item-derivery   | string      | null: false                    |
@@ -37,12 +39,13 @@
 |credit-card-info | string      | null: false,                   |
 |derivery-country | string      | null: false,                   |
 |telephone-number | string      | null: false,                   |
-|user_id          | references  | null: false, foreign_key: true |
+|user             | references  | null: false, foreign_key: true |
 |derivery-country | string      | null: false,                   |
 |telephone-number | string      | null: false,                   |
 
 ### Association
 - belongs_to :item
+- belongs_to :user
 - has_one :addresses
 
 
@@ -51,12 +54,13 @@
 | Column          | type        | Option                         |
 | --------------- | ----------- | -------------------------------|
 | postal-code     | string      | null: false                    |
-| user_id         | references  | null: false, foreign_key: true |
 | country         | string      | null: false                    |
 | city            | string      | null: false                    |
 | adress          | string      | null: false                    |
+| building        | string      | null: false                    |
 | telepone-number | string      | null: false                    |
+| addresses       | references  | null: false, foreign_key: true |
+
 
 ### Association
-- belongs_to :user
 - belongs_to :order
