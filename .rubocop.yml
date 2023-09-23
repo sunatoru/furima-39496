@@ -77,4 +77,5 @@ Style/FrozenStringLiteralComment:
  Enabled: false
 
 # メソッドパラメータ名の最小文字数を設定
-Naming/MethodParameterNam
+Naming/MethodParameterName:
+ MinNameLength: 1
