@@ -56,10 +56,25 @@ RSpec.describe Item, type: :model do
         @item.valid?
         expect(@item.errors.full_messages).to include("Item price は商品の価格を入力してください")
       end
-      it '商品の価格が300から9,999,999の範囲外の場合保存できない' do
+      it '商品の価格が300未満の場合保存できない' do
         @item.item_price = '299'
         @item.valid?
         expect(@item.errors.full_messages).to include("Item price は商品の価格は300から9,999,999の範囲内である必要があります")
+      end
+      it '商品の価格が9,999,999以上の場合保存できない' do
+        @item.item_price = '10,000,000'
+        @item.valid?
+        expect(@item.errors.full_messages).to include("Item price は商品の価格は300から9,999,999の範囲内である必要があります")
+      end
+      it '商品の価格に半角数字以外が含まれている場合保存できない' do
+        @item.item_price = 'モダン'
+        @item.valid?
+        expect(@item.errors.full_messages).to include("Item price は商品の価格は300から9,999,999の範囲内である必要があります")
+      end
+      it '商品にuser_idが紐づいていないと保存できない' do
+        @item.user = nil
+        @item.valid?
+        expect(@item.errors.full_messages).to include("User must exist")
       end
     end
   end

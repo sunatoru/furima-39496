@@ -8,13 +8,12 @@ class Item < ApplicationRecord
   validates :item_price, numericality: {
     greater_than_or_equal_to: 300,
     less_than_or_equal_to: 9_999_999,
+    only_integer: true,
     message: 'は商品の価格は300から9,999,999の範囲内である必要があります'
   }
 
 
   validate :image_presence
-
-  private
 
   def image_presence
     if !image.attached?
