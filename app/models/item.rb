@@ -12,13 +12,12 @@ class Item < ApplicationRecord
     message: 'は商品の価格は300から9,999,999の範囲内である必要があります'
   }
 
-
   validate :image_presence
 
   def image_presence
-    if !image.attached?
-      errors.add(:image, '画像を添付してください')
-    end
+    return if image.attached?
+
+    errors.add(:image, '画像を添付してください')
   end
 
   extend ActiveHash::Associations::ActiveRecordExtensions
@@ -28,9 +27,9 @@ class Item < ApplicationRecord
   belongs_to :delivery_date
   belongs_to :delivery_charge
   # ジャンルの選択が「---」の時は保存できないようにする
-  validates :category_id, numericality: { other_than: 1, message: "はカテゴリーを選んでください" }
-  validates :condition_id, numericality: { other_than: 1, message: "は商品の状態を選んでください" }
-  validates :delivery_country_id, numericality: { other_than: 1, message: "は配送先を選んでください" }
-  validates :delivery_date_id, numericality: { other_than: 1, message: "は配達までにかかる日数を選択してください" }
-  validates :delivery_charge_id, numericality: { other_than: 1, message: "は配達にかかる金額を負担する人を選択してください" }
+  validates :category_id, numericality: { other_than: 1, message: 'はカテゴリーを選んでください' }
+  validates :condition_id, numericality: { other_than: 1, message: 'は商品の状態を選んでください' }
+  validates :delivery_country_id, numericality: { other_than: 1, message: 'は配送先を選んでください' }
+  validates :delivery_date_id, numericality: { other_than: 1, message: 'は配達までにかかる日数を選択してください' }
+  validates :delivery_charge_id, numericality: { other_than: 1, message: 'は配達にかかる金額を負担する人を選択してください' }
 end
