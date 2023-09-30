@@ -48,8 +48,10 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_25_141320) do
     t.integer "delivery_date_id", null: false
     t.integer "delivery_charge_id", null: false
     t.integer "item_price", null: false
+    t.bigint "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_items_on_user_id"
   end
 
   create_table "users", charset: "utf8", force: :cascade do |t|
@@ -72,4 +74,5 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_25_141320) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "items", "users"
 end
