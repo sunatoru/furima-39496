@@ -1,6 +1,6 @@
 class ItemsController < ApplicationController
   before_action :authenticate_user!, only: [:new, :create]
-  before_action :set_items, only: [:edit, :show ,:update]
+  before_action :set_items, only: [:edit, :show, :update]
   before_action :contributor_confirmation, only: [:edit, :update]
   skip_before_action :authenticate_user!, only: [:index]
 
@@ -28,9 +28,8 @@ class ItemsController < ApplicationController
   end
 
   def update
-    
     if @item.update(item_params)
-	    redirect_to item_path
+      redirect_to item_path
     else
       render :edit, status: :unprocessable_entity
     end
