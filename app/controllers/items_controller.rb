@@ -1,7 +1,6 @@
 class ItemsController < ApplicationController
   before_action :authenticate_user!, only: [:new, :create]
   before_action :set_items, only: [:edit, :show, :update]
-  before_action :contributor_confirmation, only: [:edit, :update]
   skip_before_action :authenticate_user!, only: [:index]
 
   def index
@@ -9,6 +8,7 @@ class ItemsController < ApplicationController
   end
 
   def show
+    @user = current_user
   end
 
   def new
@@ -25,6 +25,10 @@ class ItemsController < ApplicationController
   end
 
   def edit
+    redirect_to new_user_session_path unless user_signed_in?
+    return if current_user == @item.user
+
+    redirect_to root_path
   end
 
   def update
@@ -39,10 +43,6 @@ class ItemsController < ApplicationController
 
   def set_items
     @item = Item.find(params[:id])
-  end
-
-  def contributor_confirmation
-    redirect_to root_path unless current_user == @item.user
   end
 
   def item_params
