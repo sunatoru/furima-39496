@@ -1,6 +1,6 @@
 class ItemsController < ApplicationController
-  before_action :authenticate_user!, only: [:new, :create]
-  before_action :set_items, only: [:edit, :show, :update]
+  before_action :authenticate_user!, only: [:new, :create, :destroy]
+  before_action :set_items, only: [:edit, :show, :update, :destroy]
   skip_before_action :authenticate_user!, only: [:index]
 
   def index
@@ -8,7 +8,6 @@ class ItemsController < ApplicationController
   end
 
   def show
-    @user = current_user
   end
 
   def new
@@ -41,6 +40,15 @@ class ItemsController < ApplicationController
     else
       render :edit, status: :unprocessable_entity
     end
+  end
+
+  def destroy
+    if user_signed_in?
+      @item.destroy if @item.user == current_user
+    else
+      redirect_to new_user_session_path # 未ログインユーザーはログインページへ飛ばす
+    end
+    redirect_to root_path # itemの出品者じゃなければ削除させずにホーム画面へ飛ばす
   end
 
   private
