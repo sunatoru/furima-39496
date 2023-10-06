@@ -43,12 +43,12 @@ class ItemsController < ApplicationController
   end
 
   def destroy
-    if user_signed_in? && @item.user == current_user
-      @item.destroy
-      redirect_to root_path
+    if user_signed_in?
+      @item.destroy if @item.user == current_user
     else
-      render :show
+      redirect_to new_user_session_path # 未ログインユーザーはログインページへ飛ばす
     end
+    redirect_to root_path # itemの出品者じゃなければ削除させずにホーム画面へ飛ばす
   end
 
   private
