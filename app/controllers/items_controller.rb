@@ -24,14 +24,15 @@ class ItemsController < ApplicationController
   end
 
   def edit
-    unless user_signed_in?
+    if user_signed_in?
+      if current_user == @item.user && @item.order.blank?
+        # ログイン済みユーザーで、出品者でかつ売れていない場合、編集ページにアクセスを許可
+      else
+        redirect_to root_path
+      end
+    else
       redirect_to new_user_session_path
-      return
     end
-    return if current_user == @item.user
-
-    redirect_to root_path
-    nil
   end
 
   def update
