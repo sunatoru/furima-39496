@@ -5,7 +5,7 @@ class OrderAddress
   with_options presence: true do
     validates :postal_code, format: { with: /\A[0-9]{3}-[0-9]{4}\z/, message: 'is invalid. Include hyphen(-)' }
     validates :delivery_country_id, numericality: { other_than: 1, message: 'は配送先を選んでください' }
-    validates :city, format: { with: /\A[ぁ-んァ-ヶ一-龥々ー]+\z/, message: 'は漢字か平仮名かかなを含める必要があります' }
+    validates :city, presence: { message: 'は市町村区を記入してください' }
     validates :address, presence: { message: 'は番地を記入してください' }
     validates :telephone_number, format: { with: /\A[0-9]{10,11}\z/, message: 'は数字のみかつ10桁以上11桁以下の電話番号を入力してください' }
     validates :token, presence: true

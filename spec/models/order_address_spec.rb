@@ -3,7 +3,9 @@ require 'rails_helper'
 RSpec.describe OrderAddress, type: :model do
   describe '商品購入' do
     before do
-      @order_address = FactoryBot.build(:order_address)
+      user = FactoryBot.create(:user)
+      item = FactoryBot.create(:item)
+      @order_address = FactoryBot.build(:order_address, user_id: user.id, item_id: item.id)
     end
     context '商品が購入できる場合' do
       it 'すべての情報を正しく入力していれば商品を購入できる' do
@@ -28,7 +30,7 @@ RSpec.describe OrderAddress, type: :model do
       it '市区町村の欄が空の場合' do
         @order_address.city = ''
         @order_address.valid?
-        expect(@order_address.errors.full_messages).to include "City can't be blank", 'City は漢字か平仮名かかなを含める必要があります'
+        expect(@order_address.errors.full_messages).to include 'City は市町村区を記入してください'
       end
       it '番地の欄が空の場合' do
         @order_address.address = ''
@@ -61,11 +63,6 @@ RSpec.describe OrderAddress, type: :model do
         expect(@order_address.errors.full_messages).to include 'Postal code is invalid. Include hyphen(-)',
                                                                'Postal code はハイフン(-)の前が3桁とハイフン(-)の後が4桁の数字でないと無効です'
       end
-      it '市区町村の欄に半角英数字の文字が含まれる場合' do
-        @order_address.city = '練馬123'
-        @order_address.valid?
-        expect(@order_address.errors.full_messages).to include 'City は漢字か平仮名かかなを含める必要があります'
-      end
       it '電話番号の欄に-(ハイフン)が含まれる場合' do
         @order_address.telephone_number = '090-3333-3333'
         @order_address.valid?
@@ -90,6 +87,16 @@ RSpec.describe OrderAddress, type: :model do
         @order_address.token = nil
         @order_address.valid?
         expect(@order_address.errors.full_messages).to include "Token can't be blank"
+      end
+      it 'user_idが紐づいていない場合' do
+        @order_address.user_id = nil
+        @order_address.valid?
+        expect(@order_address.errors.full_messages).to include "User can't be blank"
+      end
+      it 'item_idが紐づいていない場合' do
+        @order_address.item_id = nil
+        @order_address.valid?
+        expect(@order_address.errors.full_messages).to include "Item can't be blank"
       end
     end
   end
